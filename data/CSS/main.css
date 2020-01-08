@@ -1,6 +1,25 @@
 html {
     background-color: black;
 }
+body {
+    margin: 0;
+}
+input {
+    box-sizing: border-box;
+    padding: 2px 2.5%;
+    margin: 0.25%;
+    height: 30px;
+    border: 1px solid #313131;
+    background-color: #000000;
+    color: #d4f1f9;
+    transition: cubic-bezier(0.165, 0.84, 0.44, 1) 0.7s;
+}
+input:hover {
+    border: 1px solid #21b3d2;
+}
+input:focus {
+    border: 1px solid #21b3d2;
+}
 
 .block {
     display: inline-block;
@@ -10,8 +29,25 @@ html {
 
     background-color: #000000;
     border: 1px solid #313131;
+    color: #d4f1f9;
+    text-align: center;
+    line-height: 50px;
+    font-size: xx-large;
+}
+.correct {
+    border: 1px solid #b92e34;
+}
+.locationCorrect {
+    border: 1px solid #b7e117;
 }
 .blockLine {
     display: block;
     margin: 2px 0;
+}
+
+#inputText {
+    width: 74.5%;
+}
+#inputButton {
+    width: 24.5%;
 }
