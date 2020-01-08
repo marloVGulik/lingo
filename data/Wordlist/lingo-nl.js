@@ -477,4 +477,5 @@ var words = [
 	"zaken",
 	"zeker",
 	"zever",
-	"zeeen"];
+	"zeeen"
+];
