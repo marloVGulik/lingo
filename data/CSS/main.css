@@ -3,6 +3,7 @@ html {
 }
 body {
     margin: 0;
+    text-align: center;
 }
 input {
     box-sizing: border-box;
@@ -21,6 +22,10 @@ input:focus {
     border: 1px solid #21b3d2;
 }
 
+#timer {
+    color: #d4f1f9;
+}
+
 .block {
     box-sizing: border-box;
     display: inline-block;
@@ -37,10 +42,12 @@ input:focus {
     line-height: 100px;
 }
 .correct {
-    border: 1px solid #b92e34;
+    border: 1px solid #FFFF00;
+    border-radius: 100%;
 }
 .locationCorrect {
-    border: 1px solid #5DFC0A;
+    border: 1px solid #00FF00;
+    border-radius: 0;
 }
 .blockLine {
     display: block;

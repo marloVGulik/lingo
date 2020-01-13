@@ -1,3 +1,6 @@
+var time = 10;
+
+
 class Game {
     // Constructor:
     constructor() {
@@ -33,10 +36,11 @@ class Game {
 
         this._usedHTMLObjects.input = document.getElementById("inputText");
         this._usedHTMLObjects.inputButton = document.getElementById("inputButton");
-        
+        this._usedHTMLObjects.timer = document.getElementById("timer");
 
         // Clear invisible info
         this.start();
+        this._startTimer();
     }
 
     // Public:
@@ -45,6 +49,13 @@ class Game {
         this._word = words[Math.floor(Math.random() * words.length)];
         // this._word = "lijst";
         this._wordContainsIJ = false;
+
+        for(var i = 0; i < 5; i++) {
+            for(var j = 0; j < 5; j++) {
+                this._usedHTMLObjects.individualGuessedLetterObjects[i][j].innerHTML = "_";
+                this._usedHTMLObjects.individualGuessedLetterObjects[i][j].className = "block"
+            }
+        }
 
         for(var letterCounter = 0; letterCounter < this._word.length; letterCounter++) {
             if(this._word.charAt(letterCounter) == "i" && this._word.charAt(letterCounter + 1) == "j") {
@@ -108,14 +119,13 @@ class Game {
             }
 
             this._guessCounter++;
+            time = this._timerTime;
         }
         this._usedHTMLObjects.input.value = "";
 
         if(correct == this._word.length) {
-            alert("WIN")
-        }
-        if(this._guessCounter == 5) {
-            console.log("END");
+            alert("WIN");
+            this._win();
         }
     }
     
@@ -125,6 +135,8 @@ class Game {
     _guessCounter = 0;
     _guessedLetters = [];
     _hasStarted = false;
+    _timerTime = 100;
+    _timerInterval = null;
 
     _usedHTMLObjects = {
         input: null,
@@ -132,8 +144,37 @@ class Game {
         individualGuessedWordObjects: [],
         individualGuessedLetterObjects: [],
         correctLetterWord: null,
+        timer: null,
         // individualCorrectLetterObjects: [],
     }
+
+    _win() {
+        this.start();
+    }
+    _lose() {
+        alert("LOSE");
+        this.start();
+    }
+    _startTimer() {
+        time = this._timerTime;
+        this._usedHTMLObjects.timer.innerHTML = time;
+        this._timerInterval = setInterval(function() {
+            game._usedHTMLObjects.timer.innerHTML = `${time / 10}`;
+            game.check();
+            time--;
+        }, 100);
+    }
+    check() {
+        if(time <= 0) {
+            time = this._timerTime;
+            this._guessCounter++;
+        }
+        
+        if(this._guessCounter == 5) {
+            this._lose();
+        }
+    }
+
 
     _checkLetterWithWord(letter, iteration) {
         var correct = 0;
