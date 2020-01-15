@@ -5,11 +5,7 @@ class Game {
     // Constructor:
     constructor() {
         console.log("Starting game");
-        document.getElementById("inputButton").removeAttribute("onclick");
-        document.getElementById("inputButton").addEventListener("click", function(event) {
-            event.preventDefault();
-            game.update(document.getElementById('inputText').value);
-        })
+
         // Generate html objects
         // All guesses object are generated here
         this._usedHTMLObjects.guesses = document.getElementById("guesses");
@@ -51,6 +47,7 @@ class Game {
     // Start new game (Reset info, counter, etc)
     start() {
         this._word = words[Math.floor(Math.random() * words.length)];
+        // this._word = "lijst";
         this._wordContainsIJ = false;
 
         for(var i = 0; i < 5; i++) {
@@ -110,37 +107,15 @@ class Game {
             console.log(guessedWord);
             var placeCounter = 0;
             for(var letterCounter = 0; letterCounter < guessedWord.length; letterCounter++) {
-                var cont = true;
-                if(this._word.charAt(letterCounter) == "i" && this._word.charAt(letterCounter + 1) == "j" && guessedWord.charAt(letterCounter) == "i" && guessedWord.charAt(letterCounter + 1) == "j") {
-                    this._usedHTMLObjects.individualGuessedLetterObjects[this._guessCounter][placeCounter].classList.add("locationCorrect");
+                if(guessedWord.charAt(letterCounter) == "i" && guessedWord.charAt(letterCounter + 1) == "j") {
                     this._usedHTMLObjects.individualGuessedLetterObjects[this._guessCounter][placeCounter].innerHTML = "ij";
                     letterCounter++;
-                    cont = false;
-                    console.log("New line");
-                    correct += 2;
-                } else if(guessedWord.charAt(letterCounter) == this._word.charAt(letterCounter) && cont) {
-                    this._usedHTMLObjects.individualGuessedLetterObjects[this._guessCounter][placeCounter].classList.add("locationCorrect");
+                    if(this._checkLetterWithWord("ij", placeCounter)) correct += 2;
+                } else {
                     this._usedHTMLObjects.individualGuessedLetterObjects[this._guessCounter][placeCounter].innerHTML = guessedWord.charAt(letterCounter);
-                    correct++;
+                    if(this._checkLetterWithWord(guessedWord.charAt(placeCounter), placeCounter)) correct++;
                 }
                 placeCounter++;
-            }
-            for(var letterCounter = 0; letterCounter < guessedWord.length; letterCounter++) {
-                for(var checkedLetterCounter = 0; checkedLetterCounter < this._word.length; checkedLetterCounter++) {
-                    var doContinue = true;
-                    for(var i = 0; i < this._usedHTMLObjects.individualGuessedLetterObjects[this._guessCounter][checkedLetterCounter].classList.length; i++) {
-                        // console.log(this._usedHTMLObjects.individualGuessedLetterObjects[this._guessCounter][checkedLetterCounter].classList[i]);
-                        if(this._usedHTMLObjects.individualGuessedLetterObjects[this._guessCounter][checkedLetterCounter].classList[i] == "locationCorrect") {
-                            doContinue = false;
-                        }
-                    }
-                    if(doContinue) {
-                        if(guessedWord.charAt(letterCounter) == this._word.charAt(checkedLetterCounter)) {
-                            this._usedHTMLObjects.individualGuessedLetterObjects[this._guessCounter][letterCounter].classList.add("correct");
-                        }
-                        this._usedHTMLObjects.individualGuessedLetterObjects[this._guessCounter][letterCounter].innerHTML = guessedWord.charAt(letterCounter);
-                    }
-                }
             }
 
             this._guessCounter++;
